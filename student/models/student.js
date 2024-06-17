@@ -1,3 +1,4 @@
+const { types } = require("joi");
 const mongoose = require("mongoose");
 const studentSchema = new mongoose.Schema(
   {
@@ -47,6 +48,10 @@ const studentSchema = new mongoose.Schema(
         session:{
             type:String,
         },
+     },
+     paymentDue:{
+       type:Number,
+       default:0
      },
      admissionFees:{
        type:Number,

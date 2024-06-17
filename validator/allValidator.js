@@ -27,6 +27,7 @@ const adminUserLoginSchema =Joi.object({
      'number.empty': 'Student admissionFees is required.',
       'any.required': 'Student admissionFees is required.',
     }),
+    paymentDue:Joi.number(),
     studentDetails: Joi.object({
       firstName: Joi.string().required().messages({
         'string.empty': 'Student first name is required.',

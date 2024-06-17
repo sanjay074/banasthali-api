@@ -7,9 +7,10 @@ exports.addNewStudent = async (req,res)=>{
       if(error){
           return res.status(400).json({message:error.details[0].message});
       }
-      const {} = req.body
+      const data = req.body
+      console.log(data);
       // Create a new student document
-      const student = new Student(req.body);
+      const student = new Student(data);
       await student.save();
       return res.status(201).json({success:true, message:"New student  created  sucessfully"});
 
