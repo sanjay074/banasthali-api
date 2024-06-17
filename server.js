@@ -22,7 +22,8 @@ mongoose.connection.on("error", (err) => {
 });
 
 const Auth = require("./auth/routes/admin");
-
+const Student = require("./student/routes/student");
+const Payment =require("./account/routes/payment");
 
 
 // middleware
@@ -32,7 +33,8 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.use("/api/auth",Auth);
-
+app.use("/api",Student)
+app.use("/api",Payment);
 
 var PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
