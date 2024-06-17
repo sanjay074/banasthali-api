@@ -1,6 +1,5 @@
 const Payment = require("../models/payment");
 const Student = require("../../student/models/student");
-const PaymentHistory = require("../../student/models/paymentHistory");
 const mongoose = require("mongoose");
 const {studentFeesJoiSchema} = require("../../validator/allValidator");
 exports.studentPayment = async (req,res)=>{
@@ -10,12 +9,12 @@ exports.studentPayment = async (req,res)=>{
           return res.status(400).json({message:error.details[0].message});
       };
       
-      const {studentId,firstName,lastName,rollNumber,amount,transactionId,phoneNumber,transactionDate,paymentType} = req.body;
+      const {studentId,firstName,lastName,rollNumber,amount,transactionId,phoneNumber,paymentType} = req.body;
       if(!mongoose.Types.ObjectId.isValid(studentId)){
         return res.status(400).json({ status: false, message: "Invalid student id" });
     }
     const findStudentData = await Student.findById(studentId);
-    const  userAmount = findStudentData.admissionFees;
+    const  userAmount = findStudentData.paymentDue;
     if(userAmount<amount){
        return res.status(400).json({status:false,message:"Insufficient Balance"})
     }
@@ -23,17 +22,11 @@ exports.studentPayment = async (req,res)=>{
         return res.status(400).json({status:false,message:"Amount 0 is not allow"});
       }
     const paymentdata = userAmount-amount  ;
-    const paymentHistory = new PaymentHistory({
-      studentId:studentId,
-      totalAmount:userAmount,
-      paymentDue:paymentdata,
-      paymentReceived:amount,
-    })
-    await paymentHistory.save()
       const studentPayment = new Payment ({
-        studentId,firstName,lastName,rollNumber,amount,transactionDate,transactionId,phoneNumber,paymentType
+        studentId,firstName,lastName,rollNumber,amount,transactionId,phoneNumber,paymentType
       })
-      await studentPayment.save();
+      await studentPayment.save(); 
+      const finddata = await Student.findByIdAndUpdate(studentId,{paymentDue:paymentdata})
       return res.status(201).json({success:true, message:"Payment created  sucessfully"});
 
     }catch(error){
