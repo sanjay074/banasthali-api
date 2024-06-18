@@ -10,10 +10,8 @@ exports.studentPayment = async (req,res)=>{
       };
       
       const {studentId,firstName,lastName,rollNumber,amount,transactionId,phoneNumber,paymentType} = req.body;
-      if(!mongoose.Types.ObjectId.isValid(studentId)){
-        return res.status(400).json({ status: false, message: "Invalid student id" });
-    }
-    const findStudentData = await Student.findById(studentId);
+    const findStudentData = await Student.findOne({ 'studentDetails.studentId': studentId });
+    const userId = findStudentData.id
     const  userAmount = findStudentData.paymentDue;
     if(userAmount<amount){
        return res.status(400).json({status:false,message:"Insufficient Balance"})
@@ -23,10 +21,11 @@ exports.studentPayment = async (req,res)=>{
       }
     const paymentdata = userAmount-amount  ;
       const studentPayment = new Payment ({
-        studentId,firstName,lastName,rollNumber,amount,transactionId,phoneNumber,paymentType
+        studentId:userId,firstName,lastName,rollNumber,amount,transactionId,phoneNumber,paymentType
       })
       await studentPayment.save(); 
-      const finddata = await Student.findByIdAndUpdate(studentId,{paymentDue:paymentdata})
+
+      const finddata = await Student.findByIdAndUpdate(userId,{paymentDue:paymentdata})
       return res.status(201).json({success:true, message:"Payment created  sucessfully"});
 
     }catch(error){
