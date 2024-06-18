@@ -3,7 +3,7 @@ const router = express.Router();
 const {studentPayment,getAllPaymentHistory} = require("../controllers/paymentController");
 const {verifyTokenAndAdmin} = require("../../middlewares/auth");
 
-router.post("/payment",verifyTokenAndAdmin,studentPayment);
+router.post("/payment",studentPayment);
 router.get("/getAllHistory",verifyTokenAndAdmin,getAllPaymentHistory);
 
 

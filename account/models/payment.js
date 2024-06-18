@@ -19,7 +19,7 @@ const paymentSchema = new mongoose.Schema(
           type:Number,
          },
       transactionId:{
-           type:Number
+           type:String
          },
       phoneNumber:{
           type:String
@@ -35,7 +35,7 @@ const paymentSchema = new mongoose.Schema(
       status: {
               type: String,
               enum: ['pending', 'completed', 'decline'],
-              default:"pending"
+              default:"completed"
             },
 },
   { timestamps: true }

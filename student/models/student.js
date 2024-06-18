@@ -29,6 +29,12 @@ const studentSchema = new mongoose.Schema(
             address:{
               type:String
             },
+            studentId:{
+              type:String
+             },
+             rollNumber:{
+              type:String
+           },
     },
      parentDetails:{
         firstName:{
@@ -49,6 +55,7 @@ const studentSchema = new mongoose.Schema(
             type:String,
         },
      },
+    
      paymentDue:{
        type:Number,
        default:0

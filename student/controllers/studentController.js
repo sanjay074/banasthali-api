@@ -7,10 +7,34 @@ exports.addNewStudent = async (req,res)=>{
       if(error){
           return res.status(400).json({message:error.details[0].message});
       }
-      const data = req.body
-      console.log(data);
-      // Create a new student document
-      const student = new Student(data);
+      // const data = req.body
+      // console.log(data);
+      // // Create a new student document
+      // const student = new Student(data);
+      const student = new Student({
+        studentDetails:{
+          firstName:req.body.studentDetails.firstName,
+          lastName:req.body.studentDetails.lastName,
+          gender:req.body.studentDetails.gender,
+          dob:req.body.studentDetails.dob,
+          email:req.body.studentDetails.email,
+          mobileNumber:req.body.studentDetails.mobileNumber,
+          address:req.body.studentDetails.address,
+          studentId:req.body.studentDetails.studentId,
+          rollNumber:req.body.studentDetails.rollNumber,
+        },
+        parentDetails:{
+          firstName:req.body. parentDetails.firstName,
+          lastName:req.body. parentDetails.lastName,
+          mobileNumber:req.body. parentDetails.mobileNumber
+        },
+        courseDetails:{
+          courseName:req.body.courseDetails.courseName,
+          session:req.body.courseDetails.session
+        },
+        admissionFees:req.body.admissionFees,
+        paymentDue:req.body.admissionFees
+      })
       await student.save();
       return res.status(201).json({success:true, message:"New student  created  sucessfully"});
 
