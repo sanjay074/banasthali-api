@@ -28,6 +28,7 @@ const adminUserLoginSchema =Joi.object({
       'any.required': 'Student admissionFees is required.',
     }),
     paymentDue:Joi.number(),
+    urlImgae:Joi.string(),
     studentDetails: Joi.object({
       firstName: Joi.string().required().messages({
         'string.empty': 'Student first name is required.',
@@ -40,6 +41,14 @@ const adminUserLoginSchema =Joi.object({
       gender: Joi.string().valid('male', 'female').required().messages({
         'any.only': 'Gender must be either male or female.',
         'any.required': 'Gender is required.',
+      }),
+      studentId:Joi.string().required().messages({
+        'string.empty': 'studentId is required.',
+        'any.required': 'studentId is required.',
+      }),
+      rollNumber: Joi.string().required().messages({
+        'string.empty': 'Roll number is required.',
+        'any.required': 'Roll number is required.',
       }),
       dob: Joi.string().required().messages({
         'string.empty': 'Date of birth is required.',
@@ -106,22 +115,19 @@ const studentFeesJoiSchema = Joi.object({
   amount: Joi.number().default(0).messages({
     'number.base': 'Amount must be a number.',
   }),
-  transactionId: Joi.number().required().messages({
-    'number.base': 'Transaction ID must be a number.',
+  transactionId: Joi.string().required().messages({
+    'string.base': 'Transaction ID must be a number.',
     'any.required': 'Transaction ID is required.',
   }),
   phoneNumber: Joi.string().required().messages({
     'string.empty': 'Phone number is required.',
     'any.required': 'Phone number is required.',
   }),
-  // transactionDate: Joi.string().required().messages({
-  //   'string.empty': 'Transaction date is required.',
-  //   'any.required': 'Transaction date is required.',
-  // }),
+  
   paymentType: Joi.string().valid('cash', 'online').default('cash').messages({
     'any.only': 'Payment type must be either "cash" or "online".',
   }),
-  status: Joi.string().valid('pending', 'completed', 'decline').default('pending').messages({
+  status: Joi.string().valid('pending', 'completed', 'decline').default('completed').messages({
     'any.only': 'Status must be either "pending", "completed", or "decline".',
   }),
 });

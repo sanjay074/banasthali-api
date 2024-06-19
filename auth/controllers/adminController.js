@@ -1,9 +1,10 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const AdminUser = require("../models/admin");
+const UserToken = require("../models/userToken");
 const {registrationAminUserSchema,adminUserLoginSchema} = require("../../validator/allValidator");
 
-
+//njj
 exports.registrationUser = async (req, res) => {
     try{
      const {email,password} = req.body;
@@ -34,7 +35,7 @@ exports.registrationUser = async (req, res) => {
      
    }
 
-   exports.asminUserLogin = async (req, res) => {
+   exports.adminUserLogin = async (req, res) => {
     try {
       const {error}= adminUserLoginSchema.validate(req.body);
       if(error){
@@ -67,3 +68,6 @@ exports.registrationUser = async (req, res) => {
 
 
   };  
+
+
+  

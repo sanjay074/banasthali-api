@@ -29,6 +29,13 @@ const studentSchema = new mongoose.Schema(
             address:{
               type:String
             },
+            studentId:{
+              type:String,
+              unique:true
+             },
+             rollNumber:{
+              type:String
+           },
     },
      parentDetails:{
         firstName:{
@@ -49,6 +56,7 @@ const studentSchema = new mongoose.Schema(
             type:String,
         },
      },
+    
      paymentDue:{
        type:Number,
        default:0
@@ -56,6 +64,9 @@ const studentSchema = new mongoose.Schema(
      admissionFees:{
        type:Number,
        default:0
+     },
+     urlImgae:{
+      type:String
      }
 },
   { timestamps: true }
