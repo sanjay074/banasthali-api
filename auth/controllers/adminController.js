@@ -4,7 +4,7 @@ const AdminUser = require("../models/admin");
 const UserToken = require("../models/userToken");
 const {registrationAminUserSchema,adminUserLoginSchema} = require("../../validator/allValidator");
 
-
+//njj
 exports.registrationUser = async (req, res) => {
     try{
      const {email,password} = req.body;
