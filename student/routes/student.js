@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const {addNewStudent} = require("../controllers/studentController");
+const {addNewStudent,totalamountPaymentDue,getTotalStudent,getAllStudent,imageUpload} = require("../controllers/studentController");
+const { upload } = require("../../middlewares/fileUpload");
 const {verifyTokenAndAdmin} = require("../../middlewares/auth");
-router.post('/addNewStudent', addNewStudent);
-
-
+router.post('/addNewStudent', upload,addNewStudent);
+router.get("/totalPaymentDue",totalamountPaymentDue);
+router.get("/getTotalStudent",getTotalStudent);
+router.get("/getAllStudent",getAllStudent);
+router.post("/imageUpload",upload,imageUpload);
 module.exports = router;

@@ -64,6 +64,9 @@ const studentSchema = new mongoose.Schema(
      admissionFees:{
        type:Number,
        default:0
+     },
+     urlImgae:{
+      type:String
      }
 },
   { timestamps: true }
