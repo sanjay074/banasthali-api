@@ -7,7 +7,7 @@ const userTokenSchema = new mongoose.Schema(
     status:{
         type:String
     },
-    userID:{
+    email:{
         type: String,
       },
 },

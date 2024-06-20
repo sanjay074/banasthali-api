@@ -57,7 +57,7 @@ exports.addNewStudent = async (req,res)=>{
         },
         admissionFees:req.body.admissionFees,
         paymentDue:req.body.admissionFees,
-        urlImgae:result.secure_url
+        urlImgae:result.secure_url 
       })
       await student.save();
       return res.status(201).json({success:true, message:"New student  created  sucessfully"});

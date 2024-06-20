@@ -57,6 +57,22 @@ exports.registrationUser = async (req, res) => {
           process.env.JWT_SER,
           { expiresIn: "30d" }
         );
+        const foundstatus = await UserToken.findOne({
+          email: user.email,
+          status: true,
+        });
+        if (foundstatus) {
+          await UserToken.updateMany(
+            { email: user.email, status: true },
+            { status: false }
+          );
+        }
+  
+        const usertoken = new UserToken();
+        usertoken.token = token;
+        usertoken.status = true;
+        usertoken.email = user.email;
+        usertoken.save();
         res.status(200).json({success:true, message: "Admin user is login sucessfully", token });
       }
     } catch (error) {
@@ -69,5 +85,30 @@ exports.registrationUser = async (req, res) => {
 
   };  
 
+
+  exports.tokenstatus = async (req, res) => {
+    try {
+      const authorization = req.headers?.authorization;
+      const token = authorization.split(" ")[1];
+      const isTokenExists = await UserToken.findOne({
+        token: token,
+      });
+      console.log(isTokenExists);
+      if (isTokenExists?.status == null) {
+        return res.status(401).json({
+          status: 401,
+          message:"User token not get"
+        });
+      }
+  
+      return res.status(200).json({
+        data: isTokenExists?.status,
+      });
+    } catch (error) {
+      return res.status(500).json({
+        message: "something went wrong",
+      });
+    }
+  };
 
   
