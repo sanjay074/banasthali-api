@@ -149,3 +149,27 @@ exports.totalamountPayment= async(req,res)=>{
       })
   }
 }
+
+
+
+exports.getAllPaymentStudentId = async(req,res)=>{
+  try{
+    const  {studentId}  = req.params;
+
+    console.log(studentId);
+  
+    const payments = await Payment.find({ studentId }).exec();
+
+    if (!payments.length) {
+      return res.status(404).send({success:false, message: "No payments found for this student." });
+    }
+      return res.status(200).json({success:true, message:"Get all payment history by StudentId sucessfully",payments}); 
+
+  }catch(error){
+      return res.status(500).json({
+          status:0,
+          message:error.message.toString(),
+      })
+  }
+
+}
