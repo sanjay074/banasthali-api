@@ -8,5 +8,5 @@ router.get("/getAllHistory",verifyTokenAndAdmin,getAllPaymentHistory);
 router.get("/userHistory/:id",geOneUserPaymentHistory);
 router.get("/totalAmount",totalamountPayment);
 router.get("/getAllPayment",verifyTokenAndAdmin,getAllPayment);
-router.get("/allPaymentStudentId/:id",verifyTokenAndAdmin,getAllPaymentStudentId);
+router.get("/allPaymentStudentId/:studentId",verifyTokenAndAdmin,getAllPaymentStudentId);
 module.exports = router;

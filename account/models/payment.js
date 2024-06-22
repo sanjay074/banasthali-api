@@ -6,6 +6,7 @@ const paymentSchema = new mongoose.Schema(
       ref: "Student",
       required: true,
     },
+    
       firstName:{
             type:String
         },

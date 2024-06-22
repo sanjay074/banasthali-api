@@ -149,8 +149,6 @@ exports.getAllStudent= async (req, res) => {
 };
 
 
-
-
 exports.imageUpload = async (req, res) => {
   try {
     if (!req.file) {

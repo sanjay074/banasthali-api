@@ -101,18 +101,23 @@ exports.getAllPaymentHistory = async (req, res) => {
   };
 exports.geOneUserPaymentHistory = async(req,res)=>{
   try{
-      const userId = req.params.id;
-      if(!mongoose.Types.ObjectId.isValid(userId)){
+      const studentId = req.params.id;
+      if(!mongoose.Types.ObjectId.isValid(studentId)){
           return res.status(400).json({ success:false, message: "Invalid userId ID" });
         }
-      const userHistory  = await Student.findById(userId);
+      const userHistory  = await Student.findById(studentId);
       if(!userHistory){
           return res.status(400).json({
               success:false,
               message:"No student found"
           })
       }
-      return res.status(200).json({success:true, message:"Get userHistory sucessfully",userHistory}); 
+      const result = await Payment.aggregate([
+        { $match: { studentId:new mongoose.Types.ObjectId(studentId) } },
+        { $group: { _id: "$studentId", totalAmount: { $sum: "$amount" } } }
+      ]);
+      const receivedAmount = result.length > 0 ? result[0].totalAmount : 0;
+      return res.status(200).json({success:true, message:"Get userHistory sucessfully",userHistory,receivedAmount}); 
 
   }catch(error){
       return res.status(500).json({
@@ -155,14 +160,11 @@ exports.totalamountPayment= async(req,res)=>{
 exports.getAllPaymentStudentId = async(req,res)=>{
   try{
     const  {studentId}  = req.params;
-
-    console.log(studentId);
-  
-    const payments = await Payment.find({ studentId }).exec();
-
-    if (!payments.length) {
-      return res.status(404).send({success:false, message: "No payments found for this student." });
+    const payments = await Payment.find({ studentId: new mongoose.Types.ObjectId(studentId) });
+    if (payments.length === 0) {
+      return res.status(404).json({ success: false, message: 'No payments found for this student.' });
     }
+   
       return res.status(200).json({success:true, message:"Get all payment history by StudentId sucessfully",payments}); 
 
   }catch(error){
