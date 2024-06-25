@@ -93,7 +93,7 @@ exports.registrationUser = async (req, res) => {
       const isTokenExists = await UserToken.findOne({
         token: token,
       });
-      console.log(isTokenExists);
+    
       if (isTokenExists?.status == null) {
         return res.status(401).json({
           status: 401,
