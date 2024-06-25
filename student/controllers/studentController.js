@@ -1,6 +1,7 @@
 const Student = require("../models/student");
 const PaymentHistory = require("../models/paymentHistory");
 const {studentJoiSchema} = require("../../validator/allValidator");
+const mongoose = require("mongoose");
 const cloudinary =require("../../cloudinary");
 exports.addNewStudent = async (req,res)=>{
     try{
@@ -69,6 +70,53 @@ exports.addNewStudent = async (req,res)=>{
       })
     }
   }
+
+ 
+  
+  exports.updateStudent = async (req, res) => {
+    try {
+      const studentId = req.params.id;
+      if (!mongoose.Types.ObjectId.isValid(studentId)) {
+        return res.status(400).json({ success: false, message: "Invalid student ID" });
+      } 
+      // const findStudentData = await Student.findOne({ 'studentDetails.studentId':req.body.studentDetails.studentId, });
+      // if(findStudentData){
+      //   return res.status(400).json({success:false, message:"student id is already taken!"});
+      // }
+      // const findStudentroll = await Student.findOne({ 'studentDetails.rollNumber':req.body.studentDetails.rollNumber, });
+      // if(findStudentroll){
+      //   return res.status(400).json({success:false, message:"student rollNumber is already taken!"});
+      // }
+       const updateData = req.body;
+    
+        if (req.file) {
+          const result = await new Promise((resolve, reject) => {
+            cloudinary.uploader.upload_stream({ resource_type: 'image' }, (error, result) => {
+              if (error) reject(error);
+              else resolve(result);
+            }).end(req.file.buffer);
+          });
+    
+          updateData.urlImgae = result.secure_url;
+        }
+      
+        // Find student by ID and update
+        const updatedStudent = await Student.findByIdAndUpdate(studentId, updateData, { new: true });
+    
+        if (!updatedStudent) {
+          return res.status(404).json({ message: 'Student not found' });
+        }
+      
+
+    res.json(updatedStudent);
+    } catch (error) {
+      return res.status(500).json({ success: false, message: error.message });
+    }
+    }
+  
+  
+
+ 
 
   exports.totalamountPaymentDue= async(req,res)=>{
     try{

@@ -13,6 +13,7 @@ exports.studentPayment = async (req,res)=>{
     const findStudentData = await Student.findOne({ 'studentDetails.studentId': studentId });
 
     const userId = findStudentData.id
+  
     const  userAmount = findStudentData.paymentDue;
     if(userAmount<amount){
        return res.status(400).json({status:false,message:"Insufficient Balance"})
