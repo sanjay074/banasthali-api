@@ -160,7 +160,7 @@ exports.getTotalStudent = async (req,res)=>{
 
 exports.getAllStudent= async (req, res) => {
   try {
-    const getAllStudent = await Student.find();
+    const getAllStudent = await Student.find().sort({ createdAt: -1 }) ;
     if (!getAllStudent) {
       return res.status(400).json({
         success: false,
@@ -181,9 +181,9 @@ exports.getAllStudent= async (req, res) => {
       return paymentObj;
     });
 
-    return res.status(201).json({
+    return res.status(200).json({
       success: true,
-      message: "Get all payment history successfully",
+      message: "Get all user list successfully",
       getAllStudent: formattedPaymentHistory,
     });
     

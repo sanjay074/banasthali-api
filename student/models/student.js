@@ -14,7 +14,7 @@ const studentSchema = new mongoose.Schema(
           },
           gender: {
               type: String,
-              enum: ["male", "female"],
+              enum: ["Male", "Female"],
               default: "",
             },
             dob:{
