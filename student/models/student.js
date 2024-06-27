@@ -31,7 +31,7 @@ const studentSchema = new mongoose.Schema(
             },
             studentId:{
               type:String,
-              unique:true,
+              
              },
              rollNumber:{
               type:String
