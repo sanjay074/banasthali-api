@@ -38,8 +38,8 @@ const adminUserLoginSchema =Joi.object({
         'string.empty': 'Parent\'s last name is required.',
         'any.required': 'Parent\'s last name is required.',
       }),
-      gender: Joi.string().valid('male', 'female').required().messages({
-        'any.only': 'Gender must be either male or female.',
+      gender: Joi.string().valid('Male', 'Female').required().messages({
+        'any.only': 'Gender must be either Male or Female.',
         'any.required': 'Gender is required.',
       }),
       studentId:Joi.string().required().messages({

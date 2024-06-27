@@ -9,7 +9,7 @@ exports.studentPayment = async (req,res)=>{
           return res.status(400).json({message:error.details[0].message});
       };
       
-      const {studentId,firstName,lastName,rollNumber,amount,transactionId,phoneNumber,paymentType} = req.body;
+    const {studentId,firstName,lastName,rollNumber,amount,transactionId,phoneNumber,paymentType} = req.body;
     const findStudentData = await Student.findOne({ 'studentDetails.studentId': studentId });
 
     const userId = findStudentData.id
@@ -161,7 +161,7 @@ exports.totalamountPayment= async(req,res)=>{
 exports.getAllPaymentStudentId = async(req,res)=>{
   try{
     const  {studentId}  = req.params;
-    const payments = await Payment.find({ studentId: new mongoose.Types.ObjectId(studentId) });
+    const payments = await Payment.find({ studentId: new mongoose.Types.ObjectId(studentId) }).sort({ createdAt: -1 });;
     if (payments.length === 0) {
       return res.status(404).json({ success: false, message: 'No payments found for this student.' });
     }

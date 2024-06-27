@@ -14,7 +14,7 @@ const studentSchema = new mongoose.Schema(
           },
           gender: {
               type: String,
-              enum: ["male", "female"],
+              enum: ["Male", "Female"],
               default: "",
             },
             dob:{
@@ -31,7 +31,7 @@ const studentSchema = new mongoose.Schema(
             },
             studentId:{
               type:String,
-              unique:true
+              unique:true,
              },
              rollNumber:{
               type:String
