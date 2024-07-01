@@ -29,8 +29,11 @@ const Payment =require("./account/routes/payment");
 // middleware
 app.use(helmet());
 app.use(morgan("dev"));
-app.use(bodyParser.json());
+
 app.use(cors());
+// Increase the limit to 50mb, for example
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 app.use("/api/auth",Auth);
 app.use("/api",Student)
