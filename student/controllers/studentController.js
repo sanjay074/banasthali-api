@@ -233,3 +233,48 @@ exports.imageUpload = async (req, res) => {
     });
   }
 };
+
+
+
+
+exports.deleteBannerImage = async (req, res) => {
+    try {
+        const { bannerId } = req.params;
+
+        // Find the banner by ID
+        const banner = await Banner.findById(bannerId);
+        if (!banner) {
+            return res.status(404).json({
+                status: 0,
+                message: "Banner not found"
+            });
+        }
+
+        // Extract the public_id from the image URL
+        const imageUrl = banner.imageUrl;
+        const publicId = imageUrl.split('/').pop().split('.')[0];
+
+        // Delete the image from Cloudinary
+        cloudinary.uploader.destroy(publicId, async (error, result) => {
+            if (error) {
+                return res.status(500).json({
+                    status: 0,
+                    message: error.message.toString(),
+                });
+            }
+
+            // Delete the banner document from MongoDB
+            await Banner.findByIdAndDelete(bannerId);
+
+            return res.status(200).json({
+                status: 1,
+                message: "Banner image and document deleted successfully"
+            });
+        });
+    } catch (error) {
+        return res.status(500).json({
+            status: 0,
+            message: error.message.toString(),
+        });
+    }
+};
